@@ -324,3 +324,5 @@ empty_tuple = tuple()
 empty_set = {} # INCORRECT.. It's an empty **DICTIONARY**
 empty_set = set()
 ```
+
+See [05/dictionaries](https://github.com/lightzane/learn-python/tree/05/dictionaries)
