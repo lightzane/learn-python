@@ -1,42 +1,50 @@
-# Classes and Instances
+# Class Variables
 
-https://www.youtube.com/watch?v=ZDa-Z5JzLYM&list=PL-osiE80TeTt2d9bfVyTiXJA-UTHn6WwU
+https://www.youtube.com/watch?v=BJ-VvGyQxho&list=PL-osiE80TeTt2d9bfVyTiXJA-UTHn6WwU
 
-## Object-Oriented Programming
-
-**Class** - blueprint for creating instances
-
-## Creating an Empty Class
-
-```py
+```diff
 class Employee:
-    pass
-```
 
-## Creating a Class
++   num_of_emps = 0
++   raise_amount = 1.04
 
-```py
-class Employee:
-    # constructor()
     def __init__(self, first, last, pay):
         self.first = first
         self.last = last
         self.pay = pay
         self.email = f'{first}.{last}@company.com'.lower()
 
++       Employee.num_of_emps += 1
+
     def fullname(self):
         return '{} {}'.format(self.first, self.last)
 
-# emp_1 and emp_2 are instances of Employee
++   def apply_raise(self):
++       self.pay = int(self.pay * self.raise_amount)
+```
+
+**Testing your class**
+
+```py
 emp_1 = Employee('John', 'Doe', 50)
 emp_2 = Employee('Ji-Eun', 'Lee', 100)
 
-print(emp_1.email) # => john.doe@company.com
-print(emp_2.email) # => ji-eun.lee@company.com
+print('Num of employees:', Employee.num_of_emps) # => Num of employees: 2
 
-print(emp_1.fullname()) # => John Doe
-print(emp_2.fullname()) # => Ji-Eun Lee
+Employee.raise_amount = 1.05
+print(Employee.raise_amount) # => 1.05
+print(emp_1.raise_amount) # => 1.05
+print(emp_1.raise_amount) # => 1.05
 
-print(Employee.fullname(emp_1)) # => John Doe
-print(Employee.fullname(emp_2)) # => Ji-Eun Lee
+emp_1.apply_raise()
+
+print(emp_1.__dict__) # => {'first': 'John', 'last': 'Doe', 'pay': 52, 'email': 'john.doe@company.com'}
+print(emp_2.__dict__) # => {'first': 'Ji-Eun', 'last': 'Lee', 'pay': 100, 'email': 'ji-eun.lee@company.com'}
+
+# Notice that there is NO `raise_amount` on the instances' dictionary
+
+emp_1.raise_amount = 2
+emp_1.apply_raise()
+
+print(emp_1.__dict__) # => {'first': 'John', 'last': 'Doe', 'pay': 104, 'email': 'john.doe@company.com', 'raise_amount': 2}
 ```
