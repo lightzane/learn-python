@@ -1,7 +1,5 @@
 # Python Object-Oriented Programming
 
-import datetime
-
 class Employee:
     
     num_of_emps = 0
@@ -36,23 +34,79 @@ class Employee:
             return False
         return True
 
-emp_1 = Employee('John', 'Doe', 50)
-emp_2 = Employee('Ji-Eun', 'Lee', 100)
-emp_3 = Employee.from_string('robin-nico-70')
-emp_4 = Employee.from_string('naomi_scott_10', split='_')
+class Developer(Employee):
+    raise_amount = 1.10
 
-print(Employee.num_of_emps) # => 4
+    def __init__(self, first, last, pay, prog_lang):
+        super().__init__(first, last, pay)
+        # Employee.__init__(self, first, last, pay) # this also works
+        self.prog_lang = prog_lang
 
-Employee.set_raise_amount(1)
-emp_1.set_raise_amount(1.05)
+class Manager(Employee):
 
-print(Employee.raise_amount) # => 1.05
-print(emp_1.raise_amount) # => 1.05
-print(emp_1.raise_amount) # => 1.05
+    '''
+    The description for the manager class
+    '''
 
-print(emp_3.__dict__) # => {'first': 'robin', 'last': 'nico', 'pay': 70, 'email': 'robin.nico@company.com'}
-print(emp_4.__dict__) # => {'first': 'naomi', 'last': 'scott', 'pay': 10, 'email': 'naomi.scott@company.com'}
+    def __init__(self, first, last, pay, employees=None): # * Practice: Pass "None" instead of empty mutable data types
+        super().__init__(first, last, pay)
 
-my_date = datetime.date(2024, 2, 11) # (Sunday)
+        if employees is None:
+            self.employees = []
+        else:
+            self.employees = employees
 
-print(Employee.is_workday(my_date)) # => False
+    def add_emp(self, emp):
+        if emp not in self.employees:
+            self.employees.append(emp)
+
+    def remove_emp(self, emp):
+        if emp in self.employees:
+            self.employees.remove(emp)
+    
+    def print_emps(self):
+        for emp in self.employees:
+            print('-->', emp.fullname())
+
+dev_1 = Developer('John', 'Doe', 50, 'Typescript and Python')
+emp_2 = Employee('Ji-Eun', 'Lee', 50)
+mgr_1 = Manager('Robin', 'Nico', 100, [dev_1])
+mgr_2 = Employee.from_string('naomi_scott_10', split='_')
+
+print(dev_1.email) # => john.doe@company.com
+
+# print(help(Developer))
+
+print(dev_1.pay) # => 50
+print(emp_2.pay) # => 50
+
+dev_1.apply_raise()
+emp_2.apply_raise()
+
+print(dev_1.pay) # => 55
+print(emp_2.pay) # => 52
+
+print(dev_1.__dict__)
+print(mgr_1.__dict__)
+
+mgr_1.add_emp(emp_2)
+mgr_1.print_emps()
+# => --> John Doe
+# => --> Ji-Eun Lee
+
+mgr_1.remove_emp(dev_1)
+mgr_1.print_emps()
+# => --> Ji-Eun Lee
+
+# * isinstance
+print(isinstance(mgr_1, Employee)) # => True
+print(isinstance(mgr_1, Manager)) # => True
+print(isinstance(mgr_1, Developer)) # => False
+
+# * issubclass
+print(issubclass(Manager, Employee)) # => True
+print(issubclass(Manager, Developer)) # => False
+print(issubclass(Employee, Developer)) # => False
+print(issubclass(Developer, Employee)) # => True
+
+# print(help(Manager))
