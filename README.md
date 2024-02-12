@@ -1,192 +1,139 @@
-# Inheritance - Creating Subclasses
+# Special (Magic/Dunder) Methods
 
-https://www.youtube.com/watch?v=RSl87lqOXDE&list=PL-osiE80TeTt2d9bfVyTiXJA-UTHn6WwU
+https://www.youtube.com/watch?v=3ohzBxoFHAY&list=PL-osiE80TeTt2d9bfVyTiXJA-UTHn6WwU
 
-Sub-classes of `Employees`:
+`__init__` is an example of a special method or dunder
 
-- [Developer](#developer-class)
-- [Manager](#manager-class)
-
-# Developer class
+Other common special `dunder` methods are the following:
 
 ```py
-class Developer(Employee):
-    pass
+class Employee:
+    ...
+    def __repr__(self):
+        pass
+
+    def __str__(self):
+        pass
+
+emp_2 = Employee('Ji-Eun', 'Lee', 50)
+print(emp_2) # => <__main__.Employee object at 0x00000194A8D888C0>
+
+# These are triggered when we run the followin on instances:
+repr(emp_2)
+str(emp_2)
 ```
 
-The `Developer` will inherit all attributes and methods of the `Employee` class.
+## `__repr__`
 
-```py
-dev_1 = Developer('John', 'Doe', 50)
-print(dev_1.email) # => john.doe@company.com
-```
+- Unambigious representation of the object which is meant to be seen by other `developers`.
 
-## Help function
+- Used by [`__str__`](#__str__) as a fallback when its not defined.
+
+### Before `__repr__` is defined in the Employee class
 
 ```py
 class Employee:
     ...
 
-class Developer(Employee):
-    pass
-
-dev_1 = Developer('John', 'Doe', 50)
 emp_2 = Employee('Ji-Eun', 'Lee', 50)
-emp_3 = Employee.from_string('robin-nico-70')
-emp_4 = Employee.from_string('naomi_scott_10', split='_')
-
-print(dev_1.email) # => john.doe@company.com
-
-print(help(Developer)) # => (( see output below ))
+# Before __repr__ is defined in the Employee class
+print(emp_2) # => <__main__.Employee object at 0x00000194A8D888C0>
 ```
 
-**OUTPUT**
-
-```bash
-john.doe@company.com
-Help on class Developer in module __main__:
-
-class Developer(Employee)
- |  Developer(first, last, pay)
- |
- |  Method resolution order:
- |      Developer
- |      Employee
- |      builtins.object
- |
- |  Methods inherited from Employee:
- |
- |  __init__(self, first, last, pay)
- |      Initialize self.  See help(type(self)) for accurate signature.
- |
- |  apply_raise(self)
- |
- |  fullname(self)
- |
- |  ----------------------------------------------------------------------
- |  Class methods inherited from Employee:
- |
- |  from_string(emp_string, split='-') from builtins.type
- |
- |  set_raise_amount(amount) from builtins.type
- |
- |  ----------------------------------------------------------------------
- |  Static methods inherited from Employee:
- |
- |  is_workday(day)
- |
- |  ----------------------------------------------------------------------
- |  Data descriptors inherited from Employee:
- |
- |  __dict__
- |      dictionary for instance variables
- |
- |  __weakref__
- |      list of weak references to the object
- |
- |  ----------------------------------------------------------------------
- |  Data and other attributes inherited from Employee:
- |
- |  num_of_emps = 4
- |
- |  raise_amount = 1.04
-
-None
-```
-
-## Increase raise_amount for Developer
+### After `__repr__` is defined in the Employee class
 
 ```py
-class Developer(Employee):
-    raise_amount = 1.10
+class Employee:
+    ...
+    def __repr__(self):
+        return f"Employee('{self.first}', '{self.last}', {self.pay})"
 
-dev_1 = Developer('John', 'Doe', 50)
+emp_2 = Employee('Ji-Eun', 'Lee', 50)
+# After __repr__ is defined in the Employee class
+print(emp_2) # => Employee('Ji-Eun', 'Lee', 50)
+```
+
+## `__str__`
+
+Readable representation of the object which is meant to be displayed for the `end-user`.
+
+### Before `__str__` is defined in the Employee class
+
+```py
+class Employee:
+    ...
+    def __repr__(self):
+        return f"Employee('{self.first}', '{self.last}', {self.pay})"
+
+emp_2 = Employee('Ji-Eun', 'Lee', 50)
+print(emp_2) # => Employee('Ji-Eun', 'Lee', 50)
+```
+
+### After `__str__` is defined in the Employee class
+
+```py
+class Employee:
+    ...
+    def __repr__(self):
+        return f"Employee('{self.first}', '{self.last}', {self.pay})"
+
+    def __str__(self):
+        return f'{self.fullname()} - {self.email}'
+
+emp_2 = Employee('Ji-Eun', 'Lee', 50)
+# After __str__ is defined in the Employee class
+print(emp_2) # => Ji-Eun Lee - ji-eun.lee@company.com
+```
+
+## `repr()` and `str()`
+
+```py
+print(repr(emp_2)) # => Employee('Ji-Eun', 'Lee', 50)
+print(str(emp_2)) # => Ji-Eun Lee - ji-eun.lee@company.com
+
+print(emp_2.__repr__()) # => Employee('Ji-Eun', 'Lee', 50)
+print(emp_2.__str__()) # => Ji-Eun Lee - ji-eun.lee@company.com
+```
+
+# Other example of Dunder is `__add__`
+
+```py
+print(1+2) # => 3
+print(int.__add__(1,2)) # => 3
+
+print('a' + 'b') # => ab
+print(str.__add__('a', 'b')) # => ab
+
+print(len('test')) # => 4
+print('test'.__len__()) # => 4
+```
+
+## Apply the same in the Employee class
+
+```py
+class Employee:
+    ...
+    def __add__(self, other):
+        return self.pay + other.pay
+
+    def __len__(self):
+        return len(self.fullname())
+
+emp_1 = Employee('John', 'Doe', 50)
 emp_2 = Employee('Ji-Eun', 'Lee', 50)
 
-print(dev_1.pay) # => 50
-print(emp_2.pay) # => 50
+# Before __add__ is defined in the Employee class
+print(emp_1 + emp_2) # ERROR
 
-dev_1.apply_raise()
-emp_2.apply_raise()
+# After __add__ is defined in the Employee class
+print(emp_1 + emp_2) # => 100
 
-print(dev_1.pay) # => 55
-print(emp_2.pay) # => 52
+# After __len__ is defined in the Employee class
+print(len(emp_1)) # => 8
 ```
 
-## Super
+# References
 
-Inheriting the parent's `__init__` constructor while having its own constructor.
+More predefined dunders / special methods:
 
-```py
-class Developer(Employee):
-    raise_amount = 1.10
-
-    def __init__(self, first, last, pay, prog_lang):
-        super().__init__(first, last, pay)
-        # Employee.__init__(self, first, last, pay) # this also works
-        self.prog_lang = prog_lang
-```
-
-# Manager Class
-
-```py
-class Manager(Employee):
-
-    '''
-    The description for the manager class
-    '''
-
-    def __init__(self, first, last, pay, employees=None): # * Practice: Pass "None" instead of empty mutable data types
-        super().__init__(first, last, pay)
-
-        if employees is None:
-            self.employees = []
-        else:
-            self.employees = employees
-
-    def add_emp(self, emp):
-        if emp not in self.employees:
-            self.employees.append(emp)
-
-    def remove_emp(self, emp):
-        if emp in self.employees:
-            self.employees.remove(emp)
-
-    def print_emps(self):
-        for emp in self.employees:
-            print('-->', emp.fullname())
-```
-
-**Testing your class**
-
-```py
-dev_1 = Developer('John', 'Doe', 50, 'Typescript and Python')
-emp_2 = Employee('Ji-Eun', 'Lee', 50)
-mgr_1 = Manager('Robin', 'Nico', 100, [dev_1])
-
-mgr_1.add_emp(emp_2)
-mgr_1.print_emps()
-# => --> John Doe
-# => --> Ji-Eun Lee
-
-mgr_1.remove_emp(dev_1)
-mgr_1.print_emps()
-# => --> Ji-Eun Lee
-```
-
-# isintance
-
-```py
-print(isinstance(mgr_1, Employee)) # => True
-print(isinstance(mgr_1, Manager)) # => True
-print(isinstance(mgr_1, Developer)) # => False
-```
-
-# issubclass
-
-```py
-print(issubclass(Manager, Employee)) # => True
-print(issubclass(Manager, Developer)) # => False
-print(issubclass(Employee, Developer)) # => False
-print(issubclass(Developer, Employee)) # => True
-```
+- https://docs.python.org/3/reference/datamodel.html#emulating-numeric-types
