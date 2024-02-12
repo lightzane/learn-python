@@ -1,139 +1,193 @@
-# Special (Magic/Dunder) Methods
+# Property Decorators - Getters, Setters, and Deleters
 
-https://www.youtube.com/watch?v=3ohzBxoFHAY&list=PL-osiE80TeTt2d9bfVyTiXJA-UTHn6WwU
+https://www.youtube.com/watch?v=jCzT9XFZ5bw&list=PL-osiE80TeTt2d9bfVyTiXJA-UTHn6WwU
 
-`__init__` is an example of a special method or dunder
+## Property Decorators
 
-Other common special `dunder` methods are the following:
+- [Getters](#getters) - `@property`
+- [Setters](#setters) - `@<prop_name>.setter`
+- [Deleters](#deleters) - `@<prop_name>.deleter`
+
+## Scenario without Getters and Setters
+
+```py
+class Employee:
+
+    def __init__(self, first, last):
+        self.first = first
+        self.last = last
+        self.email = f'{self.first}.{self.last}@email.com'.lower()
+
+    def fullname(self):
+        return f'{self.first} {self.last}'
+
+emp_1 = Employee('John', 'Doe')
+
+print(emp_1.first) # => John
+print(emp_1.email) # => john.doe@email.com
+print(emp_1.fullname()) # => John Doe
+
+emp_1.first = 'Jim'
+
+print(emp_1.first) # => Jim
+print(emp_1.email) # => john.doe@email.com # ! Observe that this is still John
+print(emp_1.fullname()) # => Jim Doe
+```
+
+### Problem #1
+
+Observe that after changing `emp_1.first` to `Jim`...<br>
+The `emp_1.email` still have the `John`
+
+### Workaround
+
+```diff
+class Employee:
+
+    def __init__(self, first, last):
+        self.first = first
+        self.last = last
+-       self.email = f'{self.first}.{self.last}@email.com'.lower()
+
++   def email(self):
++       return f'{self.first}.{self.last}@email.com'.lower()
+
+    def fullname(self):
+        return f'{self.first} {self.last}'
+
+ emp_1 = Employee('John', 'Doe')
+
+ print(emp_1.first) # => John
++print(emp_1.email()) # => john.doe@email.com
+-print(emp_1.email) # => john.doe@email.com
+ print(emp_1.fullname()) # => John Doe
+
+ emp_1.first = 'Jim'
+
+ print(emp_1.first) # => Jim
++print(emp_1.email()) # => jim.doe@email.com
+-print(emp_1.email) # => jim.doe@email.com
+ print(emp_1.fullname()) # => Jim Doe
+```
+
+In this approach, when we update the `emp_1.first`, then it will also automatically update `emp_1.email()`
+
+### Problem #2 and Solution
+
+Notice, also, `emp_1.email` is changed to `emp_1.email()`
+
+After this approach, anyone that uses our existing code will have to update their code.<br>
+So in order to continuously accessing the `email` as an attribute rather than a method `email()`...
+
+We will use `@property` decorator
+
+#### Getters
+
+```diff
+class Employee:
+
+    def __init__(self, first, last):
+        self.first = first
+        self.last = last
+
++   @property
+    def email(self):
+        return f'{self.first}.{self.last}@email.com'.lower()
+
+    def fullname(self):
+        return f'{self.first} {self.last}'
+
+ emp_1 = Employee('John', 'Doe')
+
+ print(emp_1.first) # => John
++print(emp_1.email) # => john.doe@email.com
+-print(emp_1.email()) # => john.doe@email.com
+ print(emp_1.fullname()) # => John Doe
+
+ emp_1.first = 'Jim'
+
+ print(emp_1.first) # => Jim
++print(emp_1.email) # => jim.doe@email.com
+-print(emp_1.email()) # => jim.doe@email.com
+ print(emp_1.fullname()) # => Jim Doe
+```
+
+**It works also on the fullname()**
+
+```diff
+class Employee:
+    ...
+-   @property
+    def fullname(self):
+        return f'{self.first} {self.last}'
+
+ emp_1 = Employee('John', 'Doe')
+-print(emp_1.fullname())
++print(emp_1.fullname)
+```
+
+## Next Scenario
+
+When we update `emp_1.fullname` with a new value<br>
+Then we also want to update the `first` and `last` name.
+
+To solve this, we need to create a `@<prop>.setter` decorator
+
+#### Setters
+
+```diff
+class Employee:
+    ...
+
+    @property
+    def fullname(self):
+        return f'{self.first} {self.last}'
+
++   @fullname.setter
++   def fullname(self, new_name):
++       first, last = new_name.split(' ')
++       self.first = first
++       self.last = last
+
+ print(emp_1.first) # => Jim
+ print(emp_1.email) # => jim.doe@email.com
+ print(emp_1.fullname) # => Jim Doe
+
++emp_1.fullname = 'Ji-Eun Lee'
+
++print(emp_1.first) # => Ji-eun
++print(emp_1.email) # => ji-eun.lee@email.com
+```
+
+#### Deleters
 
 ```py
 class Employee:
     ...
-    def __repr__(self):
-        pass
 
-    def __str__(self):
-        pass
+    @property
+    def email(self):
+        if self.first is None or self.last is None:
+            return None
 
-emp_2 = Employee('Ji-Eun', 'Lee', 50)
-print(emp_2) # => <__main__.Employee object at 0x00000194A8D888C0>
+        return f'{self.first}.{self.last}@email.com'.lower()
 
-# These are triggered when we run the followin on instances:
-repr(emp_2)
-str(emp_2)
+    @property
+    def fullname(self):
+        return f'{self.first} {self.last}'
+
+    @fullname.deleter
+    def fullname(self):
+        print('Name deleted!')
+        self.first = None
+        self.last = None
+
+print(emp_1.first) # => Ji-eun
+print(emp_1.email) # => ji-eun.lee@email.com
+
+del emp_1.fullname
+
+print(emp_1.first) # => None
+print(emp_1.last) # => None
+print(emp_1.email) # => None
 ```
-
-## `__repr__`
-
-- Unambigious representation of the object which is meant to be seen by other `developers`.
-
-- Used by [`__str__`](#__str__) as a fallback when its not defined.
-
-### Before `__repr__` is defined in the Employee class
-
-```py
-class Employee:
-    ...
-
-emp_2 = Employee('Ji-Eun', 'Lee', 50)
-# Before __repr__ is defined in the Employee class
-print(emp_2) # => <__main__.Employee object at 0x00000194A8D888C0>
-```
-
-### After `__repr__` is defined in the Employee class
-
-```py
-class Employee:
-    ...
-    def __repr__(self):
-        return f"Employee('{self.first}', '{self.last}', {self.pay})"
-
-emp_2 = Employee('Ji-Eun', 'Lee', 50)
-# After __repr__ is defined in the Employee class
-print(emp_2) # => Employee('Ji-Eun', 'Lee', 50)
-```
-
-## `__str__`
-
-Readable representation of the object which is meant to be displayed for the `end-user`.
-
-### Before `__str__` is defined in the Employee class
-
-```py
-class Employee:
-    ...
-    def __repr__(self):
-        return f"Employee('{self.first}', '{self.last}', {self.pay})"
-
-emp_2 = Employee('Ji-Eun', 'Lee', 50)
-print(emp_2) # => Employee('Ji-Eun', 'Lee', 50)
-```
-
-### After `__str__` is defined in the Employee class
-
-```py
-class Employee:
-    ...
-    def __repr__(self):
-        return f"Employee('{self.first}', '{self.last}', {self.pay})"
-
-    def __str__(self):
-        return f'{self.fullname()} - {self.email}'
-
-emp_2 = Employee('Ji-Eun', 'Lee', 50)
-# After __str__ is defined in the Employee class
-print(emp_2) # => Ji-Eun Lee - ji-eun.lee@company.com
-```
-
-## `repr()` and `str()`
-
-```py
-print(repr(emp_2)) # => Employee('Ji-Eun', 'Lee', 50)
-print(str(emp_2)) # => Ji-Eun Lee - ji-eun.lee@company.com
-
-print(emp_2.__repr__()) # => Employee('Ji-Eun', 'Lee', 50)
-print(emp_2.__str__()) # => Ji-Eun Lee - ji-eun.lee@company.com
-```
-
-# Other example of Dunder is `__add__`
-
-```py
-print(1+2) # => 3
-print(int.__add__(1,2)) # => 3
-
-print('a' + 'b') # => ab
-print(str.__add__('a', 'b')) # => ab
-
-print(len('test')) # => 4
-print('test'.__len__()) # => 4
-```
-
-## Apply the same in the Employee class
-
-```py
-class Employee:
-    ...
-    def __add__(self, other):
-        return self.pay + other.pay
-
-    def __len__(self):
-        return len(self.fullname())
-
-emp_1 = Employee('John', 'Doe', 50)
-emp_2 = Employee('Ji-Eun', 'Lee', 50)
-
-# Before __add__ is defined in the Employee class
-print(emp_1 + emp_2) # ERROR
-
-# After __add__ is defined in the Employee class
-print(emp_1 + emp_2) # => 100
-
-# After __len__ is defined in the Employee class
-print(len(emp_1)) # => 8
-```
-
-# References
-
-More predefined dunders / special methods:
-
-- https://docs.python.org/3/reference/datamodel.html#emulating-numeric-types
