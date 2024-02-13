@@ -32,3 +32,4 @@ a programming language
 - [virtualenv with pip](https://github.com/lightzane/learn-python/tree/l-virtualenv-with-pip?tab=readme-ov-file#virtualenv)
 - [Python and JSON data](https://github.com/lightzane/learn-python/tree/l-json?tab=readme-ov-file#working-with-json-data)
 - [File Objects](https://github.com/lightzane/learn-python/tree/l-file-objects?tab=readme-ov-file#file-objects)
+- [Variable Scope](https://github.com/lightzane/learn-python/tree/l-variable-scope?tab=readme-ov-file#variable-scope)
