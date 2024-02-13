@@ -33,3 +33,4 @@ a programming language
 - [Python and JSON data](https://github.com/lightzane/learn-python/tree/l-json?tab=readme-ov-file#working-with-json-data)
 - [File Objects](https://github.com/lightzane/learn-python/tree/l-file-objects?tab=readme-ov-file#file-objects)
 - [Variable Scope](https://github.com/lightzane/learn-python/tree/l-variable-scope?tab=readme-ov-file#variable-scope)
+- [OS Module](https://github.com/lightzane/learn-python/tree/l-os?tab=readme-ov-file#os-module---use-underlying-operating-system-functionality)
