@@ -37,3 +37,4 @@ a programming language
 - [Python Dotenv](https://github.com/lightzane/learn-python/tree/l-python-dotenv?tab=readme-ov-file#learn-python-dotenv)
 - [Context Manager](https://github.com/lightzane/learn-python/tree/l-context-manager?tab=readme-ov-file#context-manager)
 - [Error Handling](https://github.com/lightzane/learn-python/tree/l-error-handling?tab=readme-ov-file#learn-error-handling) (Try/Except Block)
+- [First class functions](https://github.com/lightzane/learn-python/tree/l-firstclass-functions?tab=readme-ov-file#learn-first-class-functions)
