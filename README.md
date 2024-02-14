@@ -38,3 +38,4 @@ a programming language
 - [Context Manager](https://github.com/lightzane/learn-python/tree/l-context-manager?tab=readme-ov-file#context-manager)
 - [Error Handling](https://github.com/lightzane/learn-python/tree/l-error-handling?tab=readme-ov-file#learn-error-handling) (Try/Except Block)
 - [First class functions](https://github.com/lightzane/learn-python/tree/l-firstclass-functions?tab=readme-ov-file#learn-first-class-functions)
+- [Decorators](https://github.com/lightzane/learn-python/tree/l-decorators?tab=readme-ov-file#learn-decorators)
