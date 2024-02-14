@@ -39,3 +39,4 @@ a programming language
 - [Error Handling](https://github.com/lightzane/learn-python/tree/l-error-handling?tab=readme-ov-file#learn-error-handling) (Try/Except Block)
 - [First class functions](https://github.com/lightzane/learn-python/tree/l-firstclass-functions?tab=readme-ov-file#learn-first-class-functions)
 - [Decorators](https://github.com/lightzane/learn-python/tree/l-decorators?tab=readme-ov-file#learn-decorators)
+  - [with Arguments](https://github.com/lightzane/learn-python/tree/l-decorators-arguments?tab=readme-ov-file#learn-decorator-with-arguments)
