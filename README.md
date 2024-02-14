@@ -36,3 +36,4 @@ a programming language
 - [OS Module](https://github.com/lightzane/learn-python/tree/l-os?tab=readme-ov-file#os-module---use-underlying-operating-system-functionality)
 - [Python Dotenv](https://github.com/lightzane/learn-python/tree/l-python-dotenv?tab=readme-ov-file#learn-python-dotenv)
 - [Context Manager](https://github.com/lightzane/learn-python/tree/l-context-manager?tab=readme-ov-file#context-manager)
+- [Error Handling](https://github.com/lightzane/learn-python/tree/l-error-handling?tab=readme-ov-file#learn-error-handling) (Try/Except Block)
