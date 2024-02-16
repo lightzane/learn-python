@@ -41,3 +41,4 @@ a programming language
 - [Decorators](https://github.com/lightzane/learn-python/tree/l-decorators?tab=readme-ov-file#learn-decorators)
   - [with Arguments](https://github.com/lightzane/learn-python/tree/l-decorators-arguments?tab=readme-ov-file#learn-decorator-with-arguments)
 - [namedtuple](https://github.com/lightzane/learn-python/tree/l-namedtuple?tab=readme-ov-file#learn-named-tuple)
+- [Python Typing](https://github.com/lightzane/learn-python/tree/l-python-typing?tab=readme-ov-file#learn-python-typing)
