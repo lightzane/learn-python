@@ -2,37 +2,44 @@ print('Hello World')
 
 r'''
 ========================================================================
-    Using a Python Virtual Environment
+    Use `pipenv` on every project
 ========================================================================
 
-    virtualenv --version
+    pipenv --version
 
     if not recognized, install via:
         
-        pip install virtualenv
+        pip install pipenv
 
-    Then create new virtual environment like so:
+    If new project, then install dependencies or dev-dependencies:
 
-        virtualenv venv
+        pipenv install <package_name>
+        pipenv install <package_name> --dev
+
+    For existing projects:
+
+        pipenv install
 
     Activate virtual environment:
-        - Linux or Mac:
-            source venv/bin/activate
-        - Windows
-            .\venv\Scripts\activate
+    
+        pipenv shell
 
-    Deactivate virtual environment:
+    Run command within virtual environment without activating:
 
-        deactivate
+        pipenv run <command>
 
-    Install and freeze dependencies after development:
+    Exit pipenv shell and virtual environment:
 
-        pip freeze --local > requirements.txt
+        exit
 
-    Share nad re-install dependencies
+    Lock dependencies for production
 
-        pip install -r requirements.txt
+        pipenv lock
+
+    Removing virtual environment
+
+        pipenv --rm
 
 
-Learn more: https://github.com/lightzane/learn-python/tree/l-virtualenv-with-pip?tab=readme-ov-file#virtualenv
+Learn more: https://github.com/lightzane/learn-python/tree/l-pipenv?tab=readme-ov-file#learn-pipenv
 '''

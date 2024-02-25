@@ -30,6 +30,7 @@ a programming language
 ## Learn more...
 
 - [virtualenv with pip](https://github.com/lightzane/learn-python/tree/l-virtualenv-with-pip?tab=readme-ov-file#virtualenv)
+  - [pipenv](https://github.com/lightzane/learn-python/tree/l-pipenv?tab=readme-ov-file#learn-pipenv) ⭐**RECOMMENDED**
 - [Python and JSON data](https://github.com/lightzane/learn-python/tree/l-json?tab=readme-ov-file#working-with-json-data)
 - [File Objects](https://github.com/lightzane/learn-python/tree/l-file-objects?tab=readme-ov-file#file-objects)
 - [Variable Scope](https://github.com/lightzane/learn-python/tree/l-variable-scope?tab=readme-ov-file#variable-scope)
@@ -43,3 +44,5 @@ a programming language
 - [namedtuple](https://github.com/lightzane/learn-python/tree/l-namedtuple?tab=readme-ov-file#learn-named-tuple)
 - [Python Typing](https://github.com/lightzane/learn-python/tree/l-python-typing?tab=readme-ov-file#learn-python-typing)
 - [Datetime](https://github.com/lightzane/learn-python/tree/l-datetime?tab=readme-ov-file#datetime-module-and-pytz)
+
+> **DISCLAIMER**: The youtube videos are not affiliated with this repository and just a reference to follow.
