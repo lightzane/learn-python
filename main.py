@@ -16,9 +16,13 @@ r'''
         pipenv install <package_name>
         pipenv install <package_name> --dev
 
-    For existing projects:
+    For existing projects, install all dependencies (including dev):
 
-        pipenv install
+        pipenv install --dev
+
+    Alternatively, clean install without affecting existing versions:
+
+        pipenv install --dev --ignore-pipfile
 
     Activate virtual environment:
     
@@ -31,10 +35,6 @@ r'''
     Exit pipenv shell and virtual environment:
 
         exit
-
-    Lock dependencies for production
-
-        pipenv lock
 
     Removing virtual environment
 
