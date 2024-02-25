@@ -6,6 +6,27 @@ https://www.youtube.com/watch?v=zDYL22QNiWk&list=PL-osiE80TeTt2d9bfVyTiXJA-UTHn6
 New way to combine package management with virtual environments. <br>
 Basically it combines `pip` and `virtualenv`
 
+## Content
+
+- [Prerequisite](#prerequisite)
+- [Installation](#installation)
+- [Getting Started](#getting-started)
+  - [Install a dependency](#install-a-dependency)
+  - [`Pipfile`](#pipfile)
+- [Activate virtual environment](#activate-virtual-environment)
+  - [`exit`](#exit-pipenv-and-deactivate-virtual-environment)
+- [Run commands without activating virtual environment](#run-commands-without-activating-virtual-environment)
+- [Using existing `requirements.txt` with `pipenv`](#using-an-existing-requirementstxt-with-pipenv)
+- [Install dev dependency](#install-a-dev-dependency)
+- [Show dependency graph](#showing-a-dependency-graph)
+- [Locate virtual environment](#location-of-virtual-environment)
+- [Removing virtual environment](#removing-a-virtual-environment)
+- [Reinstall virtual environment](#reinstall-virtual-environment)
+- [Reinstall for Starting Development](#reinstall-for-development)
+- [Checking for package vulnerabilities](#checking-for-vulnerabilities)
+- [Ready for Production](#ready-for-production)
+- [`pipenv` Help](#help)
+
 ## Prerequisite
 
 - Python 3 (3.12+) installed and `pip`
@@ -251,6 +272,20 @@ From any existing project with `Pipfile` can easily reinstall all packages (depe
 
 ```bash
 pipenv install
+```
+
+## Reinstall FOR DEVELOPMENT
+
+```bash
+pipenv install --dev
+```
+
+This will install all dependencies including dev.
+
+### Clean reinstall FOR DEVELOPMENT
+
+```bash
+pipenv install --dev --ignore-pipfile
 ```
 
 ## Checking for vulnerabilities
